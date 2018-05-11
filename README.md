@@ -25,3 +25,18 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+FireBase : https://console.firebase.google.com/u/0/
+
+NG CLI
+https://loiane.com/2017/08/how-to-add-bootstrap-to-an-angular-cli-project/#1-creating-an-angular-project-with-angular-cli
+
+Bootstrap 
+https://getbootstrap.com/docs/4.1/components/alerts/
+
+AngularFire2 
+https://github.com/angular/angularfire2/blob/master/docs/rtdb/lists.md
+
+Local
+http://localhost:4200/
