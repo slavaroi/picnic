@@ -3,9 +3,11 @@
   <div class="row">
       <div class="col-lg new-item section">
           <div class="input-group mb-3">
-            <input type="text" [(ngModel)]="newItemName" class="form-control" placeholder="Add new item" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input type="text" [(ngModel)]="newItemName" (keyup)="onKeyUp($event)"
+            class="form-control" placeholder="Add new item" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="addItem()">
+              <button class="btn btn-outline-secondary" type="button" 
+              (click)="addItem()">
                 <i class="fa fa-plus"></i></button>
             </div>
           </div>
@@ -14,45 +16,49 @@
   
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 items-list section">
-      <h2>Items list</h2>
-
       <div *ngFor="let item of itemsObservable | async" class="row item">
       <!-- <div *ngFor="let item of items" class="row item"> -->
-        <div class="col-lg-10 col-xs-10 col-sm-10">
-          <button class="btn btn-lg btn-block" (click)="select(item)">{{item.name}}</button>
+        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+          <div style="display: flex; justify-content: space-between;">
+              <button class="btn btn-lg btn-block" *ngIf="!item.editMode" (click)="select(item)">{{item.name}}</button>
+              <input class="btn-block" type="text" *ngIf="item.editMode" [(ngModel)]="item.name" />
+              
+              <div style="display: flex; margin-left: 5px;">
+                <button style="margin-right: 5px;" class="btn btn-lg" *ngIf="!item.editMode" title="edit" type="button" (click)="item.editMode = true;">
+                   <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-lg" *ngIf="item.editMode" title="save changes" type="button" (click)="finishEditItem(item)">
+                  <i class="fa fa-check"></i>
+               </button>
+                <button style="margin-right: 5px;" class="btn btn-lg" *ngIf="!item.editMode" title="remove" type="button" (click)="removeItem(item)">
+                  <i class="fa fa-close"></i>
+                </button>
+              </div>
+          </div>
+          
         </div>
-
+<!-- 
         <div class="col-lg-2 col-xs-2 col-sm-2">
           <button class="btn  btn btn-lg btn-block"
            title="remove" type="button" (click)="removeItem(item)">
             <i class="fa fa-close"></i>
           </button>
-        </div>
+        </div> -->
+
       </div>
     </div>
 
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 item-details section" *ngIf="selectedItem">
-      <h2>Item details</h2> 
-      <h3 class="item-name">
-        {{selectedItem?.name}}
-      </h3>
-      <div>
-        {{selectedItem?.assigned}}
-      </div>
-      
-      <!-- <div *ngFor="let record of selectedItem?.records" class="row">
-          <div class="col-lg-6"><span class="badge badge-warning">{{record.who}}</span></div>
-          <div class="col-lg-4"><span class="badge badge-warning">{{record.amount}}</span></div>
-          <div class="col-lg-2"><button type="button" class="btn btn-danger" (click)="removeRecord(record)"><i class="fa fa-close"></i></button></div>
-      </div> -->
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 item-details section" 
+      *ngIf="selectedItem">
+      <h2 class="item-name">{{selectedItem?.name}}</h2> 
 
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let key of getKeys(selectedItem.records)">
           <div class="row">
             <div class="col-md-10">
-              <div class="alert alert-primary" role="alert">
+              <!-- <div class="alert alert-primary" role="alert"> -->
                 {{selectedItem?.records[key].who}} {{selectedItem?.records[key].amount}}
-              </div>
+              <!-- </div> -->
             </div>
             <div class="col-md-2">
               <button type="button" class="btn btn-danger" (click)="removeRecord(key)"><i class="fa fa-close"></i></button></div>
@@ -62,19 +68,35 @@
 
       <div *ngIf="showNewRecordForm" class="new-record-form">
         <div class="row">
-            <div class="col-lg-6">
-                <input type="text" [(ngModel)]="newRecordName" class="form-control" placeholder="Who ?">
-            </div>
-            <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <input type="text" [(ngModel)]="newRecordAmount" class="form-control" placeholder="How much?">
-                  <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" (click)="addRecord()">
-                      <i class="fa fa-plus"></i></button>
+          
+          <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Who?</label>
+                    <select [(ngModel)]="newRecordName" class="form-control" id="exampleFormControlSelect1">
+                        <option selected="" value=""></option>
+                        <option value="Dina & Felix">Dina & Felix</option>
+                        <option vlaue="Masha & Slava">Masha & Slava</option>
+                    </select>
                   </div>
+
+          </div>
+
+          <div class="col-lg-5">
+              <div class="form-group">
+                <label for="amount-input">Amount</label>
+                <input type="text" [(ngModel)]="newRecordAmount" class="form-control" placeholder="How much?"  id="amount-input">
+              </div>
+            </div>
+            <div class="col-lg-1">
+                <div class="form-group">
+                    <label for="addRecordButton"></label>
+                    <button class="btn btn-secondary" type="button" (click)="addRecord()" id="addRecordButton">
+                        <i class="fa fa-plus"></i></button>
                 </div>
               </div>
-        </div>
+          </div>
+
+
         
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -85,12 +107,13 @@
       </div>
 
       <div class="row">
-          <div class="col-md-12">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-success" *ngIf="showNewRecordForm === false" (click)="this.showNewRecordForm = true;">Add record</button>
-              </div>
-          </div>
+        <div class="col-md-12">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-success" *ngIf="showNewRecordForm === false" (click)="this.showNewRecordForm = true;">Add record</button>
+            </div>
         </div>
+      </div>
+      
     </div>
   </div>
 </div>

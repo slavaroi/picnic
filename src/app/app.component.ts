@@ -8,23 +8,24 @@ import { UUID } from 'angular2-uuid';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
-  title = 'app';
+export class AppComponent implements OnInit {
   selectedItem: any = null;
   newItemName: string = null;
   showNewRecordForm: boolean = false;
   newRecordName: string = null;
   newRecordAmount: number = null;
   itemsRef: AngularFireList<any>;
-  
-  // items: Observable<any[]>;
   itemsObservable: Observable<any[]>;
   
   constructor(private db: AngularFireDatabase){
     this.itemsRef = db.list('items');
-    // Use snapshotChanges().map() to store the key
     this.itemsObservable = this.itemsRef.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key , name: c.payload.val().name, assigned: c.payload.val().assigned, records: c.payload.val().records}));
+      return changes.map(c => ({ 
+        key: c.payload.key , 
+        name: c.payload.val().name, 
+        assigned: c.payload.val().assigned,
+        records: c.payload.val().records
+      }));
     });
   }
 
@@ -33,7 +34,6 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-    // this.itemsObservable = this.getItems();
   }
 
   addItem(){
@@ -42,7 +42,6 @@ export class AppComponent implements OnInit{
       assigned: false,
       records: ''
     };
-    // this.items.push(item);
 
     this.itemsRef.push(item);
     this.newItemName = null;
@@ -83,29 +82,29 @@ export class AppComponent implements OnInit{
   }
 
   removeRecord(recordKey){
-    // const index = this.selectedItem.records.indexOf(record);
-    // this.selectedItem.records.splice(index, 1);
-
     let records = this.selectedItem.records;
-    // const recordToRemove = records[recordKey];
     delete records[recordKey];
     this.itemsRef.update(this.selectedItem.key, {records: this.selectedItem.records});
   }
 
   getItems(): Observable<any[]> {
     return this.db.list("/items").valueChanges();
-      // this.db.listref('users/' + userId).set({
-      //   username: name,
-      //   email: email,
-      //   profile_picture : imageUrl
-      // });
-
-      // Get a reference to the database service
-      // var database = firebase.database();
-    
   }
 
   getKeys(obj){
     return obj ? Object.keys(obj) : [];
+  }
+
+  onKeyUp(event: any){
+    if (event.keyCode === 13){
+      this.addItem();
+    }
+  }
+
+  finishEditItem(item){
+    delete item.editMode;
+    const name = item.name;
+
+    this.itemsRef.update(this.selectedItem.key, {name: name});
   }
 }
