@@ -40,3 +40,6 @@ https://github.com/angular/angularfire2/blob/master/docs/rtdb/lists.md
 
 Local
 http://localhost:4200/
+
+Heroku 
+https://medium.com/@hellotunmbi/how-to-deploy-angular-application-to-heroku-1d56e09c5147
