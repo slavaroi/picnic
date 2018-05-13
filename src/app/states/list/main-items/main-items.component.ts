@@ -42,7 +42,7 @@ export class MainItemsComponent implements OnInit {
     const item = {
       name: this.newItemName,
       assigned: false,
-      records: ''
+      records: []
     };
 
     this.items.push(item);

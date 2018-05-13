@@ -1,12 +1,12 @@
 <div>
-  <h2 class="item-name">{{selectedItem?.name}}</h2>
+  <h2 class="item-name">{{selectedItem.name}}</h2>
 
   <ul class="list-group">
-    <li class="list-group-item" *ngFor="let key of getKeys(selectedItem.records)">
+    <li class="list-group-item" *ngFor="let record of selectedItem.records">
       <div class="row">
         <div class="col-md-10">
           <!-- <div class="alert alert-primary" role="alert"> -->
-          {{selectedItem?.records[key].who}} {{selectedItem?.records[key].amount}}
+          {{record.comment}} {{record.price}}₪
           <!-- </div> -->
         </div>
         <div class="col-md-2">
@@ -23,20 +23,14 @@
 
       <div class="col-lg-6">
         <div class="form-group">
-          <label for="exampleFormControlSelect1">Who?</label>
-          <select [(ngModel)]="newRecordName" class="form-control" id="exampleFormControlSelect1">
-            <option selected="" value=""></option>
-            <option value="Dina & Felix">Dina & Felix</option>
-            <option vlaue="Masha & Slava">Masha & Slava</option>
-          </select>
+          <label>Comment</label>
+          <textarea cols="30" rows="3" [(ngModel)]="newRecordName" class="form-control"></textarea>
         </div>
-
       </div>
-
       <div class="col-lg-5">
         <div class="form-group">
-          <label for="amount-input">Amount</label>
-          <input type="text" [(ngModel)]="newRecordAmount" class="form-control" placeholder="How much?" id="amount-input">
+          <label for="price-input">Price</label>
+          <input type="number" [(ngModel)]="newRecordPrice" class="form-control" placeholder="How much?" id="price-input">
         </div>
       </div>
       <div class="col-lg-1">

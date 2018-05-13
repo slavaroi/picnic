@@ -1,11 +1,13 @@
-<div class="row">
-  <div class="col-md-6" [ngClass]="{'hide-mobile' : !!selectedItem}">
-    <app-main-items [items]="itemsRef" [(selectedItem)]="selectedItem"></app-main-items>
-  </div>
-  <div class="col-md-6">
-    <button type="button" class="btn btn-light show-mobile" *ngIf="!!selectedItem" (click)="selectedItem = null">
-      <i class="fa fa-arrow-left"></i>
-    </button>
-    <app-details-items *ngIf="!!selectedItem" [items]="itemsRef" [(selectedItem)]="selectedItem"></app-details-items>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6" [ngClass]="{'hide-mobile' : !!selectedItem}">
+      <app-main-items [items]="itemsRef" [(selectedItem)]="selectedItem"></app-main-items>
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-light show-mobile" *ngIf="!!selectedItem" (click)="selectedItem = null">
+        <i class="fa fa-arrow-left"></i>
+      </button>
+      <app-details-items *ngIf="!!selectedItem" [items]="itemsRef" [(selectedItem)]="selectedItem"></app-details-items>
+    </div>
   </div>
 </div>

@@ -12,6 +12,7 @@ import { ListComponent } from './states/list/list.component';
 import { MainItemsComponent } from './states/list/main-items/main-items.component';
 import { DetailsItemsComponent } from './states/list/details-items/details-items.component';
 import { ListService } from './states/list/list.service';
+import { UserService } from './shared/user.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { ListService } from './states/list/list.service';
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [ListService],
+  providers: [ListService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
