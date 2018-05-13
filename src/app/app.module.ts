@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { AppService } from './app.service';
 
 import { environment } from '../app/environment';
 import { AngularFireModule } from 'angularfire2';
@@ -29,6 +30,7 @@ import { ListService } from './states/list/list.service';
     AngularFireAuthModule
   ],
   providers: [ListService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
