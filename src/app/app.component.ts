@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {  AngularFireDatabase, AngularFireList } from 'angularfire2/database'; 
 import { Observable } from 'rxjs/Observable';
 import { UUID } from 'angular2-uuid'; 
-import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +17,7 @@ export class AppComponent implements OnInit {
   itemsRef: AngularFireList<any>;
   itemsObservable: Observable<any[]>;
   
-  constructor(private db: AngularFireDatabase,
-  private appService: AppService){
+  constructor(private db: AngularFireDatabase){
     this.itemsRef = db.list('items');
     this.itemsObservable = this.itemsRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ 
