@@ -12,13 +12,17 @@ import { MainItemsComponent } from './states/list/main-items/main-items.componen
 import { DetailsItemsComponent } from './states/list/details-items/details-items.component';
 import { ListService } from './states/list/list.service';
 import { UserService } from './shared/user.service';
+import { MydetailsComponent } from './states/mydetails/mydetails.component';
+import { PartysumComponent } from './states/partysum/partysum.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
     MainItemsComponent,
-    DetailsItemsComponent
+    DetailsItemsComponent,
+    MydetailsComponent,
+    PartysumComponent
   ],
   imports: [
     BrowserModule,

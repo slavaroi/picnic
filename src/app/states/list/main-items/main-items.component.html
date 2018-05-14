@@ -17,7 +17,7 @@
     <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
       <div style="display: flex; justify-content: space-between;">
         <button class="btn btn-lg btn-block" *ngIf="!item.editMode" (click)="select(item)">{{item.name}}
-          <span class="badge badge-light">{{item.records.length}}</span>
+          <span class="badge badge-light">{{item.records?.length}}</span>
         </button>
         <input class="btn-block" type="text" *ngIf="item.editMode" [(ngModel)]="item.name" />
 
