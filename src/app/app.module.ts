@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatListModule, MatButtonModule, MatChipsModule } from "@angular/material";
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../app/environment';
@@ -26,7 +27,8 @@ import { UserService } from './shared/user.service';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MatListModule, MatButtonModule, MatChipsModule
   ],
   providers: [ListService, UserService],
   bootstrap: [AppComponent]
