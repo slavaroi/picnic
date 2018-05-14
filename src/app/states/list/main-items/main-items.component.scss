@@ -1,0 +1,10 @@
+    .item{
+        margin: 4px 0;
+        .item-content{
+            display: flex; justify-content: space-between;
+
+            .item-buttons{
+                display: flex; margin-left: 5px;
+            }
+        }
+    }

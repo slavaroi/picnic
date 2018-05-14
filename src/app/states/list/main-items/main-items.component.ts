@@ -22,14 +22,21 @@ export class MainItemsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.itemsObservable =
-    this.items.snapshotChanges().map(changes => {
-      return changes.map(c => ({
+    this.itemsObservable = this.items.snapshotChanges().map(changes => {
+      
+      const newItems =  changes.map(c => ({
         key: c.payload.key ,
         name: c.payload.val().name,
         assigned: c.payload.val().assigned,
         records: c.payload.val().records
       }));
+
+      if (this.selectedItem) {
+        this.selectedItem = newItems.find(item => item.key == this.selectedItem.key);
+        this.selectedItemChange.emit(this.selectedItem);
+      }
+
+      return newItems;
     });
   }
 
