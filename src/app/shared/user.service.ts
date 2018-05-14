@@ -5,15 +5,24 @@ export class UserService {
 
     name: string;
     constructor() {
-        this.getName();
-    }
-
-    getName() {
         this.name = window.localStorage.getItem("name");
-
         if (!this.name) {
-            this.name = window.prompt("Please enter your name")
-            window.localStorage.setItem("name", this.name);
+            this.showEnterNameForm();
         }
     }
+
+    showEnterNameForm(){
+        this.name = window.prompt("Please enter your name", this.name || '');
+        window.localStorage.setItem("name", this.name);
+    }
+
+    deleteNameFromLocalStorage(){
+        window.localStorage.removeItem("name");
+    }
+
+    changeName(){
+        this.deleteNameFromLocalStorage();
+        this.showEnterNameForm();
+    }
+
 }
