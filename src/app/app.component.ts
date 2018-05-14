@@ -20,4 +20,8 @@ export class AppComponent implements OnInit {
   get name(){
     return this.userService.name;
   }
+
+  changeName(){
+    this.userService.changeName();
+  }
 }
