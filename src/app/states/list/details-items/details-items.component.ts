@@ -57,9 +57,30 @@ export class DetailsItemsComponent implements OnInit, OnChanges {
     this.showNewRecordForm = false;
   }
 
-  removeRecord(recordKey){
-    let foundIndex = this.selectedItem.records.findIndex(record => record.id == recordKey);
-    this.selectedItem.records.splice(foundIndex, 1);
+  removeRecord(record, index){
+    //let foundIndex = this.selectedItem.records.findIndex(record => record.id == record.id);
+    this.selectedItem.records.splice(index, 1);
+    this.items.update(this.selectedItem.key, {records: this.selectedItem.records});
+  }
+
+  editRecord(record){
+    record.editMode = true;
+    record.original = {
+      comment: record.comment,
+      price: record.price
+    }
+  }
+
+  cancelEdit(record){
+    record.comment = record.original.comment;
+    record.price = record.original.price;
+    delete record.editMode;
+    delete record.original;
+  }
+
+  saveRecord(record){
+    delete record.editMode;
+    delete record.original;
     this.items.update(this.selectedItem.key, {records: this.selectedItem.records});
   }
 
