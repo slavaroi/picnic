@@ -3,6 +3,7 @@ import { AngularFireList } from 'angularfire2/database';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
 import { Observable } from 'rxjs/Observable';
+import { ListService } from '../list.service';
 
 @Component({
   selector: 'app-main-items',
@@ -17,9 +18,7 @@ export class MainItemsComponent implements OnInit {
 
   newItemName: string;
   itemsObservable: Observable<any[]>;
-  constructor() {
-
-  }
+  constructor(private listService: ListService) {}
 
   ngOnInit() {
     this.itemsObservable = this.items.snapshotChanges().map(changes => {
@@ -28,7 +27,8 @@ export class MainItemsComponent implements OnInit {
         key: c.payload.key ,
         name: c.payload.val().name,
         assigned: c.payload.val().assigned,
-        records: c.payload.val().records
+        records: c.payload.val().records,
+        finished: c.payload.val().finished
       }));
 
       if (this.selectedItem) {
@@ -49,6 +49,7 @@ export class MainItemsComponent implements OnInit {
     const item = {
       name: this.newItemName,
       assigned: false,
+      finished: false,
       records: []
     };
 
@@ -71,6 +72,10 @@ export class MainItemsComponent implements OnInit {
     if (event.keyCode === 13){
       this.addItem();
     }
+  }
+
+  public itemStatus(item){
+    return item.records && item.records.length ? item.finished ? this.listService.itemStatus['success'] :this.listService.itemStatus['warning'] : this.listService.itemStatus['danger'];
   }
 
 }

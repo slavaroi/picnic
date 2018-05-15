@@ -3,6 +3,7 @@ import { AngularFireList } from 'angularfire2/database';
 import { UUID } from 'angular2-uuid';
 import { UserService } from '../../../shared/user.service';
 import { isArray } from 'util';
+import { ListService } from '../list.service';
 
 @Component({
   selector: 'app-details-items',
@@ -17,7 +18,7 @@ export class DetailsItemsComponent implements OnInit, OnChanges {
   newRecordName: string = null;
   newRecordPrice: number = 0;
   showNewRecordForm: boolean = false;
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private listService: ListService) { }
 
   ngOnInit() {
   }
@@ -68,7 +69,7 @@ export class DetailsItemsComponent implements OnInit, OnChanges {
     record.original = {
       comment: record.comment,
       price: record.price
-    }
+    };
   }
 
   cancelEdit(record){
@@ -84,10 +85,13 @@ export class DetailsItemsComponent implements OnInit, OnChanges {
     this.items.update(this.selectedItem.key, {records: this.selectedItem.records});
   }
 
-  // getKeys(obj){
-  //   return obj ? Object.keys(obj) : [];
-  // }
+  get itemStatus(){
+    return this.selectedItem.records && this.selectedItem.records.length ? this.selectedItem.finished ? this.listService.itemStatus['success'] :this.listService.itemStatus['warning'] : this.listService.itemStatus['danger'];
+  }
 
-
+  toggleItemFinished(){
+    this.selectedItem.finished = !this.selectedItem.finished;
+    this.items.update(this.selectedItem.key, {finished: this.selectedItem.finished });
+  }
 
 }

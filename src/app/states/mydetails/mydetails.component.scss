@@ -1,0 +1,14 @@
+.list-group-item{
+    display: flex;
+
+    .item-name{
+        flex: 3;
+    }
+    .item-comments{
+        flex: 3
+    }
+
+    .item-price{
+        flex: 1;
+    }
+}

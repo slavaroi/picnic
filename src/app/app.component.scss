@@ -14,4 +14,11 @@
     .new-record-form{
         margin-top: 20px;
     }
+
+
+    .ellipsys{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 }

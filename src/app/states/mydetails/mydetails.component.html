@@ -1,5 +1,8 @@
-<ul>
-  <li *ngFor="let item of result">
-    {{item.name}} - {{item.comment}} - {{item.price}}₪
+
+<ul class="list-group">
+  <li *ngFor="let item of result" class="list-group-item">
+    <div class="item-name ellipsys">{{item.name}}</div>
+    <div class="item-comments ellipsys">{{item.comment}}</div> 
+    <div class="item-price ellipsys">{{item.price}}₪</div>
   </li>
 </ul>

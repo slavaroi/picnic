@@ -1,10 +1,17 @@
 <div>
-  <h2 class="item-name">{{selectedItem.name}}</h2>
+  <h2 class="item-name">
+      {{selectedItem.name}}
+      <button type="button" class="btn btn-primary item-status btn-{{itemStatus}}" data-toggle="button" 
+  aria-pressed="false" autocomplete="off" (click)="toggleItemFinished()">
+     Finished {{selectedItem.state}}
+  </button>
+  </h2>
 
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let record of selectedItem.records; let $index = i">
       <div class="row">
-        <div class="col-md-10">
+
+        <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">  
           <!-- <div class="alert alert-primary" role="alert"> -->
           <ng-container *ngIf="!record.editMode">
             {{record.assigned}}: {{record.comment}} {{record.price}}₪
@@ -15,7 +22,8 @@
           </ng-container>
           <!-- </div> -->
         </div>
-        <div class="col-md-2">
+
+        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
           <ng-container *ngIf="!record.editMode">
             <button type="button" class="btn btn-warning" (click)="editRecord(record)">
               <i class="fa fa-pencil"></i>
@@ -24,6 +32,7 @@
               <i class="fa fa-close"></i>
             </button>
           </ng-container>
+
           <ng-container *ngIf="record.editMode">
             <button type="button" class="btn btn-success" (click)="saveRecord(record)">
               <i class="fa fa-check"></i>
@@ -33,6 +42,7 @@
             </button>
           </ng-container>
         </div>
+
       </div>
     </li>
   </ul>

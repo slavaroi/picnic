@@ -4,4 +4,10 @@ import { Injectable } from '@angular/core';
 export class ListService {
 
     constructor() { }
+
+    itemStatus = {
+        danger: 'danger',
+        warning: 'warning',
+        success: 'success'
+    };
 }
