@@ -12,7 +12,33 @@
       </div>
     </div>
   </div>
-
+  <mat-nav-list>
+    <mat-list-item *ngFor="let item of itemsObservable | async" (click)="select(item)">
+      <ng-container *ngIf="!item.editMode">
+        {{item.name}}
+        <span class="badge badge-light">{{item.records?.length}}</span>
+      </ng-container>
+      <mat-form-field class="example-full-width" *ngIf="item.editMode">
+        <input matInput [(ngModel)]="item.name">
+      </mat-form-field>
+      <div class="item-buttons">
+        <button mat-icon-button (click)="item.editMode = true;">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="item-buttons">
+        <button style="margin-right: 5px;" class="btn btn-lg" *ngIf="!item.editMode" title="edit" type="button" (click)="item.editMode = true;">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button class="btn btn-lg" *ngIf="item.editMode" title="save changes" type="button" (click)="finishEditItem(item)">
+          <i class="fa fa-check"></i>
+        </button>
+        <button style="margin-right: 5px;" class="btn btn-lg" *ngIf="!item.editMode" title="remove" type="button" (click)="removeItem(item)">
+          <i class="fa fa-close"></i>
+        </button>
+      </div>
+    </mat-list-item>
+  </mat-nav-list>
   <div *ngFor="let item of itemsObservable | async" class="row">
     <!-- <div *ngFor="let item of items" class="row item"> -->
     <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">

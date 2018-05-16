@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatListModule, MatButtonModule, MatInputModule, MatIconModule } from "@angular/material";
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +31,11 @@ import { PartysumComponent } from './states/partysum/partysum.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MatListModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule
   ],
   providers: [ListService, UserService],
   bootstrap: [AppComponent]
