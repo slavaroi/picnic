@@ -20,7 +20,7 @@
         <button class="btn btn-lg btn-block btn-{{itemStatus(item)}}" *ngIf="!item.editMode" (click)="select(item)">{{item.name}}
           <span class="badge badge-light">{{item.records?.length}}</span>
         </button>
-        <input class="btn-block" type="text" *ngIf="item.editMode" [(ngModel)]="item.name" />
+        <input class="btn-block" type="text" *ngIf="item.editMode" [(ngModel)]="item.name" (keyup)="onKeyUpEdit($event, item)"/>
 
         <div class="item-buttons">
           <button style="margin-right: 5px;" class="btn btn-lg" *ngIf="!item.editMode" title="edit" type="button" (click)="item.editMode = true;">
