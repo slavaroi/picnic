@@ -65,12 +65,18 @@ export class MainItemsComponent implements OnInit {
   finishEditItem(item){
     delete item.editMode;
     const name = item.name;
-    this.items.update(this.selectedItem.key, {name: name});
+    this.items.update(item.key, {name: name});
   }
 
   onKeyUp(event: any){
     if (event.keyCode === 13){
       this.addItem();
+    }
+  }
+
+  onKeyUpEdit(event: any, item){
+    if (event.keyCode === 13){
+      this.finishEditItem(item);
     }
   }
 
