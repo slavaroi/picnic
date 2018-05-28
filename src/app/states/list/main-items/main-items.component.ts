@@ -16,13 +16,12 @@ export class MainItemsComponent implements OnInit {
   @Input() selectedItem: any;
   @Output() selectedItemChange = new EventEmitter();
 
-  newItemName: string;
   itemsObservable: Observable<any[]>;
   constructor(private listService: ListService) {}
 
   ngOnInit() {
     this.itemsObservable = this.items.snapshotChanges().map(changes => {
-      
+
       const newItems =  changes.map(c => ({
         key: c.payload.key ,
         name: c.payload.val().name,
@@ -45,16 +44,15 @@ export class MainItemsComponent implements OnInit {
     this.selectedItemChange.emit(this.selectedItem);
   }
 
-  addItem(){
+  addItem(itemName){
     const item = {
-      name: this.newItemName,
+      name: itemName,
       assigned: false,
       finished: false,
       records: []
     };
 
     this.items.push(item);
-    this.newItemName = null;
   }
 
   removeItem(item){
@@ -66,12 +64,6 @@ export class MainItemsComponent implements OnInit {
     delete item.editMode;
     const name = item.name;
     this.items.update(item.key, {name: name});
-  }
-
-  onKeyUp(event: any){
-    if (event.keyCode === 13){
-      this.addItem();
-    }
   }
 
   onKeyUpEdit(event: any, item){

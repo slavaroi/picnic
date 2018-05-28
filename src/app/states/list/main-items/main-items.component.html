@@ -1,24 +1,42 @@
 <div>
-  <div class="row">
-    <div class="col-lg new-item section">
-      <div class="input-group mb-3">
-        <input type="text" [(ngModel)]="newItemName" (keyup)="onKeyUp($event)" class="form-control" placeholder="Add new item" aria-label="Recipient's username"
-          aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" (click)="addItem()">
-            <i class="fa fa-plus"></i>
-          </button>
+  <app-add-item (onAdd)="addItem($event)"></app-add-item>
+  <div class="items-content scroll">
+    <div class="list-group">
+      <button type="button" class="list-group-item list-group-item-action" (click)="select(item)" *ngFor="let item of itemsObservable | async"
+        [ngClass]="{'active' : item.key == selectedItem?.key && !item.editMode,
+                        'status-start' : !item.records || item.records.length == 0,
+                        'status-process' : item.records?.length > 0 && !item.finished,
+                        'status-finished' : item.finished}">
+        <div *ngIf="!item.editMode">
+          {{item.name}}
+          <span class="badge badge-light">{{item.records?.length || 0}}</span>
         </div>
-      </div>
+        <div *ngIf="item.editMode" class="edit-item">
+          <input class="form-control" type="text" *ngIf="item.editMode" [(ngModel)]="item.name" (keyup)="onKeyUpEdit($event, item)"
+          />
+        </div>
+        <div>
+          <button class="action-button" mat-icon-button *ngIf="!item.editMode" title="edit" type="button" (click)="item.editMode = true;">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button class="action-button" mat-icon-button *ngIf="!item.editMode" title="remove" type="button" (click)="removeItem(item)">
+            <i class="fa fa-close"></i>
+          </button>
+          <button class="edit-action-button" mat-icon-button *ngIf="item.editMode" title="save changes" type="button" (click)="finishEditItem(item)">
+            <i class="fa fa-check"></i>
+          </button>
+          <!-- <button class="edit-action-button" mat-icon-button *ngIf="item.editMode" title="save changes" type="button" (click)="finishEditItem(item)">
+            <i class="fa fa-check"></i>
+          </button> -->
+        </div>
+      </button>
     </div>
   </div>
-
-  <div *ngFor="let item of itemsObservable | async" class="row">
-    <!-- <div *ngFor="let item of items" class="row item"> -->
+  <!-- <div *ngFor="let item of itemsObservable | async" class="row">
     <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 item">
       <div class="item-content">
         <button class="btn btn-lg btn-block btn-{{itemStatus(item)}}" *ngIf="!item.editMode" (click)="select(item)">{{item.name}}
-          <span class="badge badge-light">{{item.records?.length}}</span>
+          <span class="badge badge-light">{{item.records?.length || 0}}</span>
         </button>
         <input class="btn-block" type="text" *ngIf="item.editMode" [(ngModel)]="item.name" (keyup)="onKeyUpEdit($event, item)" />
 
@@ -36,13 +54,5 @@
       </div>
 
     </div>
-    <!--
-      <div class="col-lg-2 col-xs-2 col-sm-2">
-        <button class="btn  btn btn-lg btn-block"
-         title="remove" type="button" (click)="removeItem(item)">
-          <i class="fa fa-close"></i>
-        </button>
-      </div> -->
-
-  </div>
+  </div> -->
 </div>

@@ -1,0 +1,9 @@
+<form>
+  <mat-form-field>
+    <input matInput placeholder="New item" name="newItem" [(ngModel)]="value" (keyup)="onKeyUp($event)">
+  </mat-form-field>
+  <button mat-raised-button (click)="addItem()">
+    <i class="fa fa-plus"></i>
+    Add
+  </button>
+</form>
