@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFireList } from 'angularfire2/database';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/toArray';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from "rxjs/operators";
 import { ListService } from '../list.service';
 
 @Component({
@@ -20,7 +19,7 @@ export class MainItemsComponent implements OnInit {
   constructor(private listService: ListService) {}
 
   ngOnInit() {
-    this.itemsObservable = this.items.snapshotChanges().map(changes => {
+    this.itemsObservable = this.items.snapshotChanges().pipe(map(changes => {
 
       const newItems =  changes.map(c => ({
         key: c.payload.key ,
@@ -36,7 +35,7 @@ export class MainItemsComponent implements OnInit {
       }
 
       return newItems;
-    });
+    }));
   }
 
   select(item){
