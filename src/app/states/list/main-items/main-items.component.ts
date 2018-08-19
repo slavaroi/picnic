@@ -59,6 +59,12 @@ export class MainItemsComponent implements OnInit {
     this.select(null);
   }
 
+  removeConfirmation(item) {
+    if (confirm(`Do you want to remove ${item.name}`)) {
+      this.removeItem(item);
+    }
+  }
+
   finishEditItem(item){
     delete item.editMode;
     const name = item.name;
@@ -73,6 +79,10 @@ export class MainItemsComponent implements OnInit {
 
   public itemStatus(item){
     return item.records && item.records.length ? item.finished ? this.listService.itemStatus['success'] :this.listService.itemStatus['warning'] : this.listService.itemStatus['danger'];
+  }
+
+  trackByFn(index, item) {
+    return item.key
   }
 
 }

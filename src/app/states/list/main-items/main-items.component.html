@@ -2,7 +2,7 @@
   <app-add-item (onAdd)="addItem($event)"></app-add-item>
   <div class="items-content scroll">
     <div class="list-group">
-      <button type="button" class="list-group-item list-group-item-action" (click)="select(item)" *ngFor="let item of itemsObservable | async"
+      <button type="button" class="list-group-item list-group-item-action" (click)="select(item)" *ngFor="let item of itemsObservable | async;trackBy: trackByFn"
         [ngClass]="{'active' : item.key == selectedItem?.key && !item.editMode,
                         'status-start' : !item.records || item.records.length == 0,
                         'status-process' : item.records?.length > 0 && !item.finished,
@@ -19,7 +19,7 @@
           <button class="action-button" mat-icon-button *ngIf="!item.editMode" title="edit" type="button" (click)="item.editMode = true;">
             <i class="fa fa-edit"></i>
           </button>
-          <button class="action-button" mat-icon-button *ngIf="!item.editMode" title="remove" type="button" (click)="removeItem(item)">
+          <button class="action-button" mat-icon-button *ngIf="!item.editMode" title="remove" type="button" (click)="removeConfirmation(item)">
             <i class="fa fa-close"></i>
           </button>
           <button class="edit-action-button" mat-icon-button *ngIf="item.editMode" title="save changes" type="button" (click)="finishEditItem(item)">

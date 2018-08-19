@@ -28,6 +28,9 @@ export class DetailsItemsComponent implements OnInit, OnChanges {
       if (!isArray(this.selectedItem.records)) {
         this.selectedItem.records = [];
       }
+      this.newRecordName = null;
+      this.newRecordPrice = 0;
+      this.showNewRecordForm = false;
     }
   }
 
@@ -41,7 +44,7 @@ export class DetailsItemsComponent implements OnInit, OnChanges {
       id: id,
       comment: this.newRecordName,
       price: this.newRecordPrice,
-      assigned: this.userService.name
+      assigned: this.userName
     };
 
     this.selectedItem.records.push(record);
@@ -89,9 +92,25 @@ export class DetailsItemsComponent implements OnInit, OnChanges {
     return this.selectedItem.records && this.selectedItem.records.length ? this.selectedItem.finished ? this.listService.itemStatus['success'] :this.listService.itemStatus['warning'] : this.listService.itemStatus['danger'];
   }
 
+  get toggleChecked() {
+    return !this.toggleDisabled && this.selectedItem.finished;
+  }
+
+  get toggleDisabled() {
+    return !this.selectedItem.records || this.selectedItem.records.length === 0;
+  }
+
+  get userName() {
+    return this.userService.name;
+  }
+
   toggleItemFinished(){
     this.selectedItem.finished = !this.selectedItem.finished;
     this.items.update(this.selectedItem.key, {finished: this.selectedItem.finished });
+  }
+
+  trackByFn(index, item) {
+    return item.id
   }
 
 }

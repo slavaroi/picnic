@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule } from "@angular/material";
+import { MatInputModule, MatButtonModule, MatCardModule, MatSlideToggleModule } from "@angular/material";
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
@@ -37,7 +37,9 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule,
     MatInputModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatSlideToggleModule
   ],
   providers: [ListService, UserService],
   bootstrap: [AppComponent]

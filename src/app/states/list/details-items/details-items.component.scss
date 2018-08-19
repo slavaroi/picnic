@@ -1,0 +1,33 @@
+.selecteditem-header {
+    display: flex;
+    justify-content: space-between;
+}
+.record-item {
+    margin-bottom: 10px;
+    .record-title {
+        background-color: antiquewhite;
+    }
+    .record-content {
+        display: flex;
+        justify-content: space-between;
+        white-space: pre-wrap;
+
+        .record-price {
+            font-weight: bold;
+        }
+    }
+
+    .record-content2 {
+        display: flex;
+        flex-direction: column;
+        .price-input {
+            align-self: flex-end;
+        }
+    }
+
+    .record-actions {
+        button {
+            margin-right: 15px;
+        }
+    }
+}

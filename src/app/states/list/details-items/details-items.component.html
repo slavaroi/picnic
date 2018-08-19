@@ -1,92 +1,64 @@
 <div>
-  <h2 class="item-name">
+  <div class="selecteditem-header">
+    <h2>
       {{selectedItem.name}}
-      <button type="button" class="btn btn-primary item-status btn-{{itemStatus}}" data-toggle="button"
-  aria-pressed="false" autocomplete="off" (click)="toggleItemFinished()">
-     Finished {{selectedItem.state}}
-  </button>
-  </h2>
-
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let record of selectedItem.records; index as $index">
-      <div class="row">
-
-        <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
-          <!-- <div class="alert alert-primary" role="alert"> -->
-          <ng-container *ngIf="!record.editMode">
-            {{record.assigned}}: {{record.comment}} {{record.price}}₪
-          </ng-container>
-          <ng-container *ngIf="record.editMode">
-              <textarea cols="30" rows="3" [(ngModel)]="record.comment" placeholder="Comment" class="form-control"></textarea>
-              <input type="number" [(ngModel)]="record.price" class="form-control" placeholder="Price" id="price-input">
-          </ng-container>
-          <!-- </div> -->
-        </div>
-
-        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
-          <ng-container *ngIf="!record.editMode">
-            <button type="button" class="btn btn-warning" (click)="editRecord(record)">
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button type="button" class="btn btn-danger" (click)="removeRecord(record, $index)">
-              <i class="fa fa-close"></i>
-            </button>
-          </ng-container>
-
-          <ng-container *ngIf="record.editMode">
-            <button type="button" class="btn btn-success" (click)="saveRecord(record)">
-              <i class="fa fa-check"></i>
-            </button>
-            <button type="button" class="btn btn-info" (click)="cancelEdit(record)">
-              <i class="fa fa-close"></i>
-            </button>
-          </ng-container>
-        </div>
-
-      </div>
-    </li>
-  </ul>
-
-  <div *ngIf="showNewRecordForm" class="new-record-form">
-    <div class="row">
-
-      <div class="col-lg-6">
-        <div class="form-group">
-          <label>Comment</label>
-          <textarea cols="30" rows="3" [(ngModel)]="newRecordName" class="form-control"></textarea>
-        </div>
-      </div>
-      <div class="col-lg-5">
-        <div class="form-group">
-          <label for="price-input">Price</label>
-          <input type="number" [(ngModel)]="newRecordPrice" class="form-control" placeholder="How much?" id="price-input">
-        </div>
-      </div>
-      <div class="col-lg-1">
-        <div class="form-group">
-          <label for="addRecordButton"></label>
-          <button class="btn btn-secondary" type="button" (click)="addRecord()" id="addRecordButton">
-            <i class="fa fa-plus"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <button type="button" class="btn btn-danger" *ngIf="showNewRecordForm === true" (click)="cancelAddRecord()">Cancel</button>
-      </div>
-    </div>
-
+    </h2>
+    <mat-slide-toggle color="primary" [disabled]="toggleDisabled" [checked]="toggleChecked" (toggleChange)="toggleItemFinished()">Finished</mat-slide-toggle>
   </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="input-group-append">
-        <button type="button" class="btn btn-success" *ngIf="showNewRecordForm === false" (click)="this.showNewRecordForm = true;">Add record</button>
+  <mat-card *ngFor="let record of selectedItem.records; index as $index; trackBy:trackByFn" class="record-item">
+    <mat-card-header>
+      <mat-card-title class="record-title">
+        {{record.assigned}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="record-content" *ngIf="!record.editMode">
+        <div>{{record.comment}}</div>
+        <div class="record-price">{{record.price | number}}₪</div>
       </div>
-    </div>
-  </div>
+      <div *ngIf="record.editMode" class="record-content2">
+        <mat-form-field>
+          <textarea cols="30" matInput rows="4" [(ngModel)]="record.comment" placeholder="Comment"></textarea>
+        </mat-form-field>
+        <mat-form-field class="price-input">
+          <input type="number" matInput [(ngModel)]="record.price" placeholder="Price" id="price-input">
+          <span matSuffix>₪</span>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="record-actions">
+      <ng-container *ngIf="!record.editMode">
+        <button mat-stroked-button color="primary" (click)="editRecord(record)">EDIT</button>
+        <button mat-flat-button color="warn" (click)="removeRecord(record, $index)">REMOVE</button>
+      </ng-container>
+      <ng-container *ngIf="record.editMode">
+        <button mat-flat-button color="primary" (click)="saveRecord(record)">SAVE</button>
+        <button mat-button (click)="cancelEdit(record)">CANCEL</button>
+      </ng-container>
+    </mat-card-actions>
+  </mat-card>
+  <button mat-raised-button color="primary" *ngIf="!showNewRecordForm" (click)="showNewRecordForm = true">Add new record</button>
+  <!-- ADD RECORD -->
+  <mat-card *ngIf="showNewRecordForm" class="record-item">
+    <mat-card-header>
+      <mat-card-title class="record-title">
+        {{userName}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="record-content2">
+        <mat-form-field>
+          <textarea cols="30" matInput rows="4" [(ngModel)]="newRecordName" placeholder="Comment"></textarea>
+        </mat-form-field>
+        <mat-form-field class="price-input">
+          <input type="number" matInput [(ngModel)]="newRecordPrice" placeholder="Price" id="price-input">
+          <span matSuffix>₪</span>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="record-actions">
+      <button mat-flat-button color="primary" (click)="addRecord()">CREATE</button>
+      <button mat-button (click)="cancelAddRecord()">CLOSE</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
